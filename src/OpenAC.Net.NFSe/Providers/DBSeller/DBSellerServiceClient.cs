@@ -38,7 +38,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class DBSellerServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class DBSellerServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -148,14 +148,14 @@ namespace OpenAC.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            var baseUrl = Endpoint.Address.Uri.GetLeftPart(UriPartial.Authority);
+            var baseUrl = new Uri(Url).GetLeftPart(UriPartial.Authority);
             var soapNs = EhHomologação ? $"xmlns:e=\"{baseUrl}/webservice/index/homologacao\"" :
                                          $"xmlns:e=\"{baseUrl}/webservice/index/producao\"";
 
             return Execute(soapAction, message, "", responseTag, soapNs);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;

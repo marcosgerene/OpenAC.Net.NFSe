@@ -31,25 +31,24 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
 using System.Xml.Linq;
 using OpenAC.Net.Core.Extensions;
 using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class CuritibaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class CuritibaServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
         public CuritibaServiceClient(ProviderCuritiba provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
-            if (!(Endpoint?.Binding is BasicHttpBinding binding))
-                return;
+            //if (!(Endpoint?.Binding is BasicHttpBinding binding))
+            //    return;
 
-            binding.MaxReceivedMessageSize = 1000000;
-            binding.MaxBufferPoolSize = 1000000;
-            binding.MaxBufferSize = 1000000;
+            //binding.MaxReceivedMessageSize = 1000000;
+            //binding.MaxBufferPoolSize = 1000000;
+            //binding.MaxBufferSize = 1000000;
         }
 
         public CuritibaServiceClient(ProviderCuritiba provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
@@ -115,7 +114,7 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute(action, message, responseTag, new string[0]);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element == null) return xmlDocument.ToString();

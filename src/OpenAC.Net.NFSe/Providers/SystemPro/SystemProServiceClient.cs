@@ -38,13 +38,12 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class SystemProServiceClient : NFSeHttpServiceClient, IServiceClient
+    internal sealed class SystemProServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
         public SystemProServiceClient(ProviderSystemPro provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
         {
-            MessageVersion = SoapVersion.Soap11;
         }
 
         #endregion Constructors

@@ -38,7 +38,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class FiorilliServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class FiorilliServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -196,7 +196,7 @@ namespace OpenAC.Net.NFSe.Providers
             return !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Usuario) && !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Senha);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)

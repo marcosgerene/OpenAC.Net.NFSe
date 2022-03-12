@@ -38,7 +38,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class GoianiaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class GoianiaServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -119,7 +119,7 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute(soapAction, message, "", responseTag, "xmlns:ws=\"http://nfse.goiania.go.gov.br/ws/\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).Value;

@@ -36,7 +36,7 @@ using OpenAC.Net.DFe.Core.Common;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class GinfesServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class GinfesServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -166,7 +166,7 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute("", message, "", responseTag, ns);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;
         }

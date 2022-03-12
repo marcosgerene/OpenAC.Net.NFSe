@@ -37,7 +37,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class DSFServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class DSFServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructor
 
@@ -158,7 +158,7 @@ namespace OpenAC.Net.NFSe.Providers
 
         private string Execute(string message, params string[] reponseTags) => Execute("", message, reponseTags, "xmlns:proc=\"http://proces.wsnfe2.dsfnet.com.br\"");
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).Value;

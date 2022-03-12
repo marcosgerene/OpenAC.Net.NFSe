@@ -30,7 +30,6 @@
 // ***********************************************************************
 
 using System;
-using System.ServiceModel.Channels;
 using System.Text;
 using System.Xml.Linq;
 using OpenAC.Net.Core.Extensions;
@@ -38,14 +37,14 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class SigissServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class SigissServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
         public SigissServiceClient(ProviderSigiss provider, TipoUrl tipoUrl) : base(provider, tipoUrl, null)
         {
-            var binding = new CustomBinding(new WsTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), new HttpsTransportBindingElement());
-            Endpoint.Binding = binding;
+            //var binding = new CustomBinding(new WsTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), new HttpsTransportBindingElement());
+            //Endpoint.Binding = binding;
         }
 
         #endregion Constructors
@@ -120,7 +119,7 @@ namespace OpenAC.Net.NFSe.Providers
             throw new NotImplementedException();
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             //verifica se o retorno tem os elementos corretos senão da erro.
             var element = xmlDocument.ElementAnyNs(responseTag[0]) ?? throw new OpenDFeCommunicationException($"Primeiro Elemento ({responseTag[0]}) do xml não encontrado");

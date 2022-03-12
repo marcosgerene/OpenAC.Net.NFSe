@@ -30,7 +30,6 @@
 // ***********************************************************************
 
 using System;
-using System.ServiceModel;
 using System.Text;
 using System.Xml.Linq;
 using OpenAC.Net.Core.Extensions;
@@ -38,18 +37,18 @@ using OpenAC.Net.Core.Extensions;
 namespace OpenAC.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class NotaCariocaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class NotaCariocaServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
         public NotaCariocaServiceClient(ProviderNotaCarioca provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
-            if (!(Endpoint?.Binding is BasicHttpBinding binding))
-                return;
+            //if (!(Endpoint?.Binding is BasicHttpBinding binding))
+            //    return;
 
-            binding.MaxReceivedMessageSize = long.MaxValue;
-            binding.MaxBufferPoolSize = long.MaxValue;
-            binding.MaxBufferSize = int.MaxValue;
+            //binding.MaxReceivedMessageSize = long.MaxValue;
+            //binding.MaxBufferPoolSize = long.MaxValue;
+            //binding.MaxBufferSize = int.MaxValue;
         }
 
         #endregion Constructors
@@ -160,7 +159,7 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute(soapAction, message, "", responseTag, "xmlns:not=\"http://notacarioca.rio.gov.br/\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }

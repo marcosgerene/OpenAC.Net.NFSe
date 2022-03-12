@@ -36,7 +36,7 @@ using OpenAC.Net.Core.Extensions;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class EquiplanoServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class EquiplanoServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -146,7 +146,7 @@ namespace OpenAC.Net.NFSe.Providers
             throw new NotImplementedException();
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value.ToString();
         }

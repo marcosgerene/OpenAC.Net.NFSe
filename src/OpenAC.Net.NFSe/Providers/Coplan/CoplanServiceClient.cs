@@ -39,7 +39,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class CoplanServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class CoplanServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Fields
 
@@ -209,7 +209,7 @@ namespace OpenAC.Net.NFSe.Providers
             return base.Execute($"Tributarioaction/ANFSE_WEB_SERVICE.{action}", message, responseTag);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs(responseTag[0])?.ElementAnyNs("Fault");
             if (element != null)

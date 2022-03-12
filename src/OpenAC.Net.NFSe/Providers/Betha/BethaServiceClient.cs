@@ -37,7 +37,7 @@ using OpenAC.Net.DFe.Core;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class BethaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class BethaServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -108,10 +108,10 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute("", message, "", "", "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element == null) return xmlDocument.Root.FirstNode.ToString();
+            if (element == null) return xmlDocument.FirstNode.ToString();
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new OpenDFeCommunicationException(exMessage);

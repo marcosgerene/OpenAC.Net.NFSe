@@ -36,7 +36,7 @@ using OpenAC.Net.Core.Extensions;
 
 namespace OpenAC.Net.NFSe.Providers
 {
-    internal sealed class AmericanaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class AmericanaServiceClient : NFSeSoapServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -145,7 +145,7 @@ namespace OpenAC.Net.NFSe.Providers
             return Execute(soapAction, message, "", responseTag, "xmlns:nfe=\"http://www.nfe.com.br/\"", "xmlns=\"http://www.nfe.com.br/WSNacional/XSD/1/nfse_municipal_v01.xsd\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }
